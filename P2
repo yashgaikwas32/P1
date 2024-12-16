@@ -1,0 +1,210 @@
+...union ...
+def remove_duplicates(lst):
+    unique = []
+    for item in lst:
+        if item not in unique:
+            unique.append(item)
+    return unique
+
+def intersection(list1, list2):
+    result = []
+    for item in list1:
+        if item in list2 and item not in result:
+            result.append(item)
+    return result
+
+def difference(list1, list2):
+    result = []
+    for item in list1:
+        if item not in list2:
+            result.append(item)
+    return result
+
+def union(list1, list2):
+    result = list1[:]
+    for item in list2:
+        if item not in result:
+            result.append(item)
+    return result
+
+def cricket_and_football_not_badminton(cricket, football, badminton):
+    result = []
+    for student in cricket:
+        if student in football and student not in badminton:
+            result.append(student)
+    return result
+
+group_a = remove_duplicates(["A", "B", "C", "D"])
+group_b = remove_duplicates(["B", "E", "F", "A"])
+group_c = remove_duplicates(["C", "G", "H", "D"])
+
+both_cricket_and_badminton = intersection(group_a, group_b)
+print("a) Students who play both cricket and badminton:", both_cricket_and_badminton)
+
+either_cricket_or_badminton = difference(union(group_a, group_b), intersection(group_a, group_b))
+print("b) Students who play either cricket or badminton but not both:", either_cricket_or_badminton)
+
+all_students = remove_duplicates(group_a + group_b + group_c)
+neither_cricket_nor_badminton = difference(all_students, union(group_a, group_b))
+print("c) Number of students who play neither cricket nor badminton:", len(neither_cricket_nor_badminton))
+
+cricket_and_football_not_badminton_result = cricket_and_football_not_badminton(group_a, group_c, group_b)
+print("d) Students who play cricket and football but not badminton:", cricket_and_football_not_badminton_result)
+
+
+
+
+∆∆∆∆∆∆.....∆∆∆∆linear bianary seach 
+
+
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i
+    return -1
+
+def sentinel_search(arr, key):
+    n = len(arr)
+    last = arr[-1]
+    arr[-1] = key
+    i = 0
+    while arr[i] != key:
+        i += 1
+    arr[-1] = last
+    if i < n - 1 or arr[-1] == key:
+        return i
+    return -1
+
+def binary_search(arr, key):
+    low, high = 0, len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == key:
+            return mid
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+def fibonacci_search(arr, key):
+    n = len(arr)
+    fib2 = 0
+    fib1 = 1
+    fibM = fib2 + fib1
+    while fibM < n:
+        fib2 = fib1
+        fib1 = fibM
+        fibM = fib2 + fib1
+    offset = -1
+    while fibM > 1:
+        i = min(offset + fib2, n - 1)
+        if arr[i] < key:
+            fibM = fib1
+            fib1 = fib2
+            fib2 = fibM - fib1
+            offset = i
+        elif arr[i] > key:
+            fibM = fib2
+            fib1 = fib1 - fib2
+            fib2 = fibM - fib1
+        else:
+            return i
+    if fib1 and arr[offset + 1] == key:
+        return offset + 1
+    return -1
+
+roll_numbers_random = [45, 12, 67, 89, 34, 56, 78]
+roll_numbers_sorted = sorted(roll_numbers_random)
+search_key = 56
+
+print("Random Roll Numbers:", roll_numbers_random)
+linear_result = linear_search(roll_numbers_random, search_key)
+print(f"Linear Search: Roll number {search_key} found at index {linear_result}" if linear_result != -1 
+      else "Not found")
+sentinel_result = sentinel_search(roll_numbers_random, search_key)
+print(f"Sentinel Search: Roll number {search_key} found at index {sentinel_result}" if sentinel_result 
+      != -1 else "Not found")
+
+print("\nSorted Roll Numbers:", roll_numbers_sorted)
+binary_result = binary_search(roll_numbers_sorted, search_key)
+print(f"Binary Search: Roll number {search_key} found at index {binary_result}" if binary_result != -1 
+      else "Not found")
+fibonacci_result = fibonacci_search(roll_numbers_sorted, search_key)
+print(f"Fibonacci Search: Roll number {search_key} found at index {fibonacci_result}" if 
+      fibonacci_result != -1 else "Not found")
+
+
+
+
+∆∆∆∆∆......∆∆∆∆∆ selection 
+
+
+
+
+
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
+
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+def top_five_scores(arr):
+    return arr[-5:][::-1]
+
+percentages = [78.5, 88.0, 92.5, 69.0, 85.0, 75.5, 90.0, 84.5, 81.0]
+print("Original Percentages:", percentages)
+
+selection_sorted = selection_sort(percentages.copy())
+print("\nPercentages sorted using Selection Sort:", selection_sorted)
+print("Top 5 Scores (Selection Sort):", top_five_scores(selection_sorted))
+
+bubble_sorted = bubble_sort(percentages.copy())
+print("\nPercentages sorted using Bubble Sort:", bubble_sorted)
+print("Top 5 Scores (Bubble Sort):", top_five_scores(bubble_sorted))
+
+
+
+def selection_sort(arr):
+    n = len(arr)
+    for i in range(n):
+        min_index = i
+        for j in range(i + 1, n):
+            if arr[j] < arr[min_index]:
+                min_index = j
+        arr[i], arr[min_index] = arr[min_index], arr[i]
+    return arr
+
+def bubble_sort(arr):
+    n = len(arr)
+    for i in range(n - 1):
+        for j in range(n - i - 1):
+            if arr[j] > arr[j + 1]:
+                arr[j], arr[j + 1] = arr[j + 1], arr[j]
+    return arr
+
+def top_five_scores(arr):
+    return arr[-5:][::-1]
+
+percentages = [78.5, 88.0, 92.5, 69.0, 85.0, 75.5, 90.0, 84.5, 81.0]
+print("Original Percentages:", percentages)
+
+selection_sorted = selection_sort(percentages.copy())
+print("\nPercentages sorted using Selection Sort:", selection_sorted)
+print("Top 5 Scores (Selection Sort):", top_five_scores(selection_sorted))
+
+bubble_sorted = bubble_sort(percentages.copy())
+print("\nPercentages sorted using Bubble Sort:", bubble_sorted)
+print("Top 5 Scores (Bubble Sort):", top_five_scores(bubble_sorted))
